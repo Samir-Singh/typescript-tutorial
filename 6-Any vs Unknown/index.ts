@@ -3,7 +3,7 @@ Any type is the most flexible type in typescript. It essentially turns off the a
 
 UseCase:
     When working with dynamic data like user input, data fetching etc.
-    When you when to migrate the code from JS to TS then you can make all variable to any so that file by file you can type safe the project
+    When you want to migrate the code from JS to TS then you can make all variable to any so that file by file you can type safe the project
 
 But we should ignore this because it makes our code less safer. Only use this when you have no options left
 */
@@ -24,3 +24,23 @@ myNumber = "samir";
 if (typeof myNumber === "number") {
   console.log(myNumber + 10);
 }
+
+// Here we are checking if arr is an array before accessing its length property.
+// If we didn't do this check, TypeScript would raise an error because arr is of type unknown.
+let arr: unknown;
+arr = [1, 2, 3];
+
+if (Array.isArray(arr)) console.log(arr.length);
+
+// Api call using unknown ... here we are using unknown in different way like <unknown> which is also called as generics
+async function fetchData(url: string): Promise<unknown> {
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
+fetchData("https://jsonplaceholder.typicode.com/todos/1").then((data) => {
+  // We need to type check before using data
+  if (typeof data === "object") {
+    // perform operations on data
+  }
+});
